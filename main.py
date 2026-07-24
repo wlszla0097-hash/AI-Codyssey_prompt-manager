@@ -63,3 +63,43 @@ while True:
         break
     else:
         print("잘못된 선택입니다. 다시 입력해주세요.")
+
+
+#1.프롬프트를 담을 통
+#prompt_list = [] #빈 리스트
+
+#def prompt_add():
+    #print("===프롬프트 추가===")
+
+    #2. 필요한 정보 입력 받기
+    #title = input("제목을 입력하세요: ")
+    #content = input("내용을 입력하세요: ")
+    #category = input("카테고리를 입력하세요: ")
+
+    #3. 입력받은 정보 딕셔너리 형태로 저장.
+    #new_prompt = {
+        #"제목": title,
+        #"내용": content,
+        #"카테고리": category,
+        #"즐겨찾기": False
+    #}
+
+    #4. 리스트에 추가
+    #prompt_list.append(new_prompt)
+
+    #print("프롬프트가 추가되었습니다!")
+
+#B방법
+prompt_list = [] #빈 리스트
+
+def prompt_add(제목, 내용, 카테고리):
+    new_prompt = {
+        "제목": 제목,
+        "내용": 내용,
+        "카테고리": 카테고리,
+        "즐겨찾기": False
+    }
+    prompt_list.append(new_prompt)
+    print(f"'{제목}' 프롬프트가 추가되었습니다.")
+
+#2.프롬프트 목록 -> prompt_show() 만들기 
