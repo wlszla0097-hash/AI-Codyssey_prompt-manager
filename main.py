@@ -69,6 +69,19 @@ def prompt_add():
     print(f"'{title}' 프롬프트가 추가되었습니다.")
 
 #2.프롬프트 목록 -> prompt_show() 만들기 
+def prompt_show():
+    if len(prompts) == 0:
+        print("등록된 프롬프트가 없습니다.")
+        return
+    for i, p in enumerate(prompts, start=1):
+        if p["즐겨찾기"] == True:
+            star = "⭐"
+        else:
+            star = ""
+        print(f"{i}. {star} {p['제목']} [{p['카테고리']}] ({p['날짜']})")
+
+        
+
 
 
 #프로그램 메인 실행 코드
@@ -78,7 +91,7 @@ while True:
     if choice == "1":
         prompt_add()
     elif choice == "2":
-        print("프롬프트 목록")
+        prompt_show()
     elif choice == "3":
         print("카테고리별 조회")
     elif choice == "4":
