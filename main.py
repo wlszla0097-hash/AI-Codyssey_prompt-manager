@@ -1,3 +1,7 @@
+#기본세팅
+import datetime  #파이썬 기본 내장 날짜 도구
+
+#프롬프트 데이터 관련
 print("관리 시스템을 시작합니다!")
 prompts = []
 prompt1 = {
@@ -5,7 +9,7 @@ prompt1 = {
     "내용": "오늘 배운 내용을 3줄로 요약하고, 복습 질문 2개를 만들어줘.",
     "카테고리": "학습 정리",
     "즐겨찾기": True,
-    "날짜": "2026-07-24"
+    "날짜": "2025-01-14"
 }
 prompt2 = {
     "제목": "프롬프트 관리 프로그램",
@@ -16,7 +20,7 @@ prompt2 = {
 }
 prompt3 = {
     "제목": "sns 홍보 관리자",
-    "내용": "너는 기업의 홍보 담당자자야. 기업의 고객층 요구에 맞는 홍보물을 작성,등록해줘.",
+    "내용": "너는 기업의 홍보 담당자야. 기업의 고객층 요구에 맞는 홍보물을 작성,등록해줘.",
     "카테고리": "홍보물 생성",
     "즐겨찾기": False,
     "날짜": "2025-01-16"
@@ -40,12 +44,39 @@ def show_menu():
     print("7. 즐겨찾기 목록")
     print("0. 종료")
 
+
+#프롬프트 추가 세팅 관련 _B방법(+공란일 때 요구사항 반영)
+#prompts = [] #제일 위쪽에 이미 리스트가 있으니 생략.
+def input_not_empty(안내문구):
+    while True:
+        user_input = input(안내문구)
+        if user_input.strip() == "":
+            print("입력값이 비어있습니다. 다시 입력해주세요.")
+        else:
+            return user_input
+def prompt_add():
+    title = input_not_empty("제목: ")
+    content = input_not_empty("내용: ")
+    category = input_not_empty("카테고리: ")
+    new_prompt = {
+        "제목": title,
+        "내용": content,
+        "카테고리": category,
+        "즐겨찾기": False,
+        "날짜": datetime.date.today().isoformat()  #오늘 날짜를 자동으로 입력   
+    }
+    prompts.append(new_prompt)
+    print(f"'{title}' 프롬프트가 추가되었습니다.")
+
+#2.프롬프트 목록 -> prompt_show() 만들기 
+
+
 #프로그램 메인 실행 코드
 while True:
     show_menu()
     choice = input("메뉴를 선택하세요 (0-7): ")
     if choice == "1":
-        print("프롬프트 추가")
+        prompt_add()
     elif choice == "2":
         print("프롬프트 목록")
     elif choice == "3":
@@ -65,41 +96,3 @@ while True:
         print("잘못된 선택입니다. 다시 입력해주세요.")
 
 
-#1.프롬프트를 담을 통
-#prompt_list = [] #빈 리스트
-
-#def prompt_add():
-    #print("===프롬프트 추가===")
-
-    #2. 필요한 정보 입력 받기
-    #title = input("제목을 입력하세요: ")
-    #content = input("내용을 입력하세요: ")
-    #category = input("카테고리를 입력하세요: ")
-
-    #3. 입력받은 정보 딕셔너리 형태로 저장.
-    #new_prompt = {
-        #"제목": title,
-        #"내용": content,
-        #"카테고리": category,
-        #"즐겨찾기": False
-    #}
-
-    #4. 리스트에 추가
-    #prompt_list.append(new_prompt)
-
-    #print("프롬프트가 추가되었습니다!")
-
-#B방법
-prompt_list = [] #빈 리스트
-
-def prompt_add(제목, 내용, 카테고리):
-    new_prompt = {
-        "제목": 제목,
-        "내용": 내용,
-        "카테고리": 카테고리,
-        "즐겨찾기": False
-    }
-    prompt_list.append(new_prompt)
-    print(f"'{제목}' 프롬프트가 추가되었습니다.")
-
-#2.프롬프트 목록 -> prompt_show() 만들기 
