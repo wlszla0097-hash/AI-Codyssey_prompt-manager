@@ -1,8 +1,9 @@
 #기본세팅
 import datetime  #파이썬 기본 내장 날짜 도구
 
-#프롬프트 데이터 관련
+
 print("관리 시스템을 시작합니다!")
+#프롬프트 데이터 관련
 prompts = []
 prompt1 = {
     "제목": "오늘의 학습 정리",
@@ -32,6 +33,7 @@ prompts.append(prompt3)
 
 print("저장된 프롬프트 개수:", len(prompts))  #len() 함수를 사용하여 리스트의 길이를 출력_개수 확인
 
+#DEF
 #메뉴 함수 세팅
 def show_menu():
     print("==== 프롬프트 관리 프로그램 ====")
@@ -74,13 +76,58 @@ def prompt_show():
         print("등록된 프롬프트가 없습니다.")
         return
     for i, p in enumerate(prompts, start=1):
-        if p["즐겨찾기"]:
-            star = "⭐"
-        else:
-            star = ""
-        print(f"{i}. {star} {p['제목']} [{p['카테고리']}] ({p['날짜']})")
-
+        print_prompt_line(i, p) # ← 도장 찍기만 부탁!
+#출력 도장 함수 (한 줄 찍기 전담)
+def print_prompt_line(i, p):
+    if p["즐겨찾기"]:
+        star = "⭐"
+    else:
+        star = ""
+    print(f"{i}. {star} {p['제목']} [{p['카테고리']}] ({p['날짜']})")
         
+#3.카테고리별 조회_딕셔너리(키:내용) 그룹핑+필터링 조립
+def prompt_category():
+    if len(prompts) == 0:
+        print("등록된 프롬프트가 없습니다.")
+        return
+    #그룹핑 : 카테고리별 몇 개인지 파악 + 동일한 내용이 생기면 같은 서랍장을 안만들고, 기존 서랍장에 append만
+    category_dict = {}
+    for p in prompts:
+        category = p["카테고리"]
+        if category not in category_dict:
+            category_dict[category] = []
+        category_dict[category].append(p)
+    #카테고리 목록을 '번호 + 개수' 형태로 출력
+    category_list = list(category_dict.keys())  # 딕셔너리 key들을 리스트로 변환
+    print("--- 카테고리 목록 ---")
+    for i, category in enumerate(category_list, start=1):
+        print(f"{i}. {category} ({len(category_dict[category])}개)")
+    # 번호 입력받기 (잘못된 입력 방어)
+    choice = input("조회할 카테고리 번호: ").strip()
+    if not choice.isdigit() or not (1 <= int(choice) <= len(category_list)):
+        print("올바른 번호를 입력해주세요.")
+        return
+    selected = category_list[int(choice) - 1]  # 번호 → 카테고리 이름
+
+    # ③ 전체 리스트 기준 번호로 필터링 출력 (번호 일관성 유지!)
+    print(f"=== {selected} ===")
+    for i, p in enumerate(prompts, start=1):
+        if p["카테고리"] == selected:
+            print_prompt_line(i, p)   # 파둔 도장 재사용!
+
+#4. 프롬프트 검색
+def prompt_search():
+    if len(prompts) == 0:
+        print("등록된 프롬프트가 없습니다.")
+        return
+    keyword = input_not_empty("검색어를 입력하세요: ")
+    count = 0
+    for i, p in enumerate(prompts, start=1):
+        if keyword in p["제목"] or keyword in p["내용"]:
+            print_prompt_line(i, p)
+            count += 1
+    if count == 0:
+        print("검색 결과가 없습니다.")
 
 
 
@@ -93,9 +140,9 @@ while True:
     elif choice == "2":
         prompt_show()
     elif choice == "3":
-        print("카테고리별 조회")
+        prompt_category()
     elif choice == "4":
-        print("프롬프트 검색")
+        prompt_search()
     elif choice == "5":
         print("프롬프트 상세 보기")
     elif choice == "6":
