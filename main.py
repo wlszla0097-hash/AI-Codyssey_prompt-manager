@@ -129,6 +129,32 @@ def prompt_search():
     if count == 0:
         print("검색 결과가 없습니다.")
 
+#번호 프롬프트 하나 고르기
+def select_prompt():
+    if len(prompts) == 0:
+        print("등록된 프롬프트가 없습니다.")
+        return None
+    prompt_show()  # 전체 목록 출력
+    choice = input("선택할 프롬프트 번호: ").strip()
+    if not choice.isdigit() or not (1 <= int(choice) <= len(prompts)):
+        print("올바른 번호를 입력해주세요.")
+        return None
+    return prompts[int(choice) - 1]  # 선택된 프롬프트 반환
+
+#5. 프롬프트 상세 보기
+def prompt_detail():
+    selected_prompt = select_prompt()
+    if selected_prompt is None:   
+        return # 실패면 먼저 탈출 _얼리리턴
+    print("=== 프롬프트 상세 정보 ===")
+    print(f"제목: {selected_prompt['제목']}")
+    print(f"내용: {selected_prompt['내용']}")
+    print(f"카테고리: {selected_prompt['카테고리']}")
+    print(f"즐겨찾기: {'예' if selected_prompt['즐겨찾기'] else '아니오'}")
+    print(f"날짜: {selected_prompt['날짜']}")
+
+
+
 
 
 #프로그램 메인 실행 코드
@@ -144,7 +170,7 @@ while True:
     elif choice == "4":
         prompt_search()
     elif choice == "5":
-        print("프롬프트 상세 보기")
+        prompt_detail()
     elif choice == "6":
         print("즐겨찾기 관리")
     elif choice == "7":
