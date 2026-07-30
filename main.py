@@ -153,6 +153,15 @@ def prompt_detail():
     print(f"즐겨찾기: {'예' if selected_prompt['즐겨찾기'] else '아니오'}")
     print(f"날짜: {selected_prompt['날짜']}")
 
+#6. 즐겨찾기 관리
+def manage_favorites():
+    selected_prompt = select_prompt()
+    if selected_prompt is None:
+        return
+    # 즐겨찾기 상태 토글
+    selected_prompt["즐겨찾기"] = not selected_prompt["즐겨찾기"]
+    status = "즐겨찾기에 추가되었습니다." if selected_prompt["즐겨찾기"] else "즐겨찾기에서 제거되었습니다."
+    print(f"'{selected_prompt['제목']}' {status}")
 
 
 
@@ -172,7 +181,7 @@ while True:
     elif choice == "5":
         prompt_detail()
     elif choice == "6":
-        print("즐겨찾기 관리")
+        manage_favorites()
     elif choice == "7":
         print("즐겨찾기 목록")
     elif choice == "0":
