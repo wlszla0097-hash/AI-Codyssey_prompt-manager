@@ -74,7 +74,7 @@ def prompt_show():
         print("등록된 프롬프트가 없습니다.")
         return
     for i, p in enumerate(prompts, start=1):
-        if p["즐겨찾기"] == True:
+        if p["즐겨찾기"]:
             star = "⭐"
         else:
             star = ""
