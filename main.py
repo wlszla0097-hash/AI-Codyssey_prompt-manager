@@ -163,6 +163,15 @@ def manage_favorites():
     status = "즐겨찾기에 추가되었습니다." if selected_prompt["즐겨찾기"] else "즐겨찾기에서 제거되었습니다."
     print(f"'{selected_prompt['제목']}' {status}")
 
+#7. 즐겨찾기 목록
+def show_favorites():
+    favorites = [p for p in prompts if p["즐겨찾기"]]
+    if not favorites:
+        print("즐겨찾기된 프롬프트가 없습니다.")
+        return
+    print("=== 즐겨찾기 목록 ===")
+    for i, p in enumerate(favorites, start=1):
+        print_prompt_line(i, p)
 
 
 
@@ -183,7 +192,7 @@ while True:
     elif choice == "6":
         manage_favorites()
     elif choice == "7":
-        print("즐겨찾기 목록")
+        show_favorites()
     elif choice == "0":
         print("프로그램을 종료합니다.")
         break
